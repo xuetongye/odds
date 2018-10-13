@@ -11,7 +11,7 @@ import requests
 from bs4 import BeautifulSoup
 
 headers = {'Referer': 'http://www.500.com/'}
-r = requests.get(url="http://trade.500.com/bjdc/", headers=headers)
+r = requests.get(url="http://trade.500.com/jczq/", headers=headers)
 # 更改编码
 r.encoding = "GBK"
 # 获取网页html
@@ -19,10 +19,10 @@ html = r.text
 # 分析html
 bs = BeautifulSoup(html, 'html.parser')
 # 获取所有场次的tr标签
-soup = bs.find_all('tr', class_='vs_lines', style='display:')
+soup = bs.find_all('tr', class_='bet-tb-tr')
 match_list = []
 
-print(soup[0].find('td', class_='league').a.get_text())
+print(soup[0].select('.itm-rangB1 p[data-type="nspf"] span')[0].get_text())
 for row in soup:
     match_dict = {}
     # 编号

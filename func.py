@@ -98,14 +98,24 @@ def jczc_html(url):
         # 客队队名
         match_dict["a_teamname"] = row.find('span', class_='team-r').a.get_text()
         # 不让球赔率
-        match_dict["odds_nspf_3"] = row.select('.itm-rangB1 p[data-type="nspf"] span')[0].get_text()
-        match_dict["odds_nspf_1"] = row.select('.itm-rangB1 p[data-type="nspf"] span')[1].get_text()
-        match_dict["odds_nspf_0"] = row.select('.itm-rangB1 p[data-type="nspf"] span')[2].get_text()
+        if row.select('.itm-rangB1 p[data-type="nspf"] span'):
+            match_dict["odds_nspf_3"] = row.select('.itm-rangB1 p[data-type="nspf"] span')[0].get_text()
+            match_dict["odds_nspf_1"] = row.select('.itm-rangB1 p[data-type="nspf"] span')[1].get_text()
+            match_dict["odds_nspf_0"] = row.select('.itm-rangB1 p[data-type="nspf"] span')[2].get_text()
+        else:
+            match_dict["odds_nspf_3"] = "未开售"
+            match_dict["odds_nspf_1"] = "未开售"
+            match_dict["odds_nspf_0"] = "未开售"
         # 让球赔率
-        match_dict["spf"] = row.select('.td-rang .itm-rangA2')[0].get_text()
-        match_dict["odds_spf_3"] = row.select('.itm-rangB2 p[data-type="spf"] span')[0].get_text()
-        match_dict["odds_spf_1"] = row.select('.itm-rangB2 p[data-type="spf"] span')[1].get_text()
-        match_dict["odds_spf_0"] = row.select('.itm-rangB2 p[data-type="spf"] span')[2].get_text()
+        if row.select('.td-rang .itm-rangA2')[0] and row.select('.itm-rangB2 p[data-type="spf"] span'):
+            match_dict["spf"] = row.select('.td-rang .itm-rangA2')[0].get_text()
+            match_dict["odds_spf_3"] = row.select('.itm-rangB2 p[data-type="spf"] span')[0].get_text()
+            match_dict["odds_spf_1"] = row.select('.itm-rangB2 p[data-type="spf"] span')[1].get_text()
+            match_dict["odds_spf_0"] = row.select('.itm-rangB2 p[data-type="spf"] span')[2].get_text()
+        else:
+            match_dict["odds_spf_3"] = "未开售"
+            match_dict["odds_spf_1"] = "未开售"
+            match_dict["odds_spf_0"] = "未开售"
         match_list.append(match_dict)
     jczq_xls_write(match_list)
 
