@@ -56,9 +56,14 @@ def bjdc_html(url):
         # match_dict["avg_spf_1"] = row.select('td .pjoz')[1].get_text()
         # match_dict["avg_spf_0"] = row.select('td .pjoz')[2].get_text()
         # 北单赔率
-        match_dict["odds_spf_3"] = row.select('.label_n .sp_value')[0].get_text()
-        match_dict["odds_spf_1"] = row.select('.label_n .sp_value')[1].get_text()
-        match_dict["odds_spf_0"] = row.select('.label_n .sp_value')[2].get_text()
+        if len(row.select('.label_n .sp_value')) != 1:
+            match_dict["odds_spf_3"] = row.select('.label_n .sp_value')[0].get_text()
+            match_dict["odds_spf_1"] = row.select('.label_n .sp_value')[1].get_text()
+            match_dict["odds_spf_0"] = row.select('.label_n .sp_value')[2].get_text()
+        else:
+            match_dict["odds_spf_3"] = row.select('.label_n')[0].get_text()
+            match_dict["odds_spf_1"] = row.select('.label_n')[1].get_text()
+            match_dict["odds_spf_0"] = row.select('.label_n')[2].get_text()
         match_list.append(match_dict)
     bjdc_xls_write(match_list)
 
